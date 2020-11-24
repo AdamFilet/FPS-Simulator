@@ -6,6 +6,7 @@
 #include "weapon.h"
 #include "config.h"
 #include "fight.h"
+#include <iomanip>
 
 class GameManager
 {
@@ -13,7 +14,8 @@ private:
 	std::vector<Fight> _fights;
 	Team _team1;
 	Team _team2;
-
+	bool _t1Won;
+	bool _t2Won;
 	int32_t _team1Score;
 	int32_t _team2Score;
 	int32_t _roundCount;
@@ -30,8 +32,6 @@ public:
 	void Matchmake();
 
 	void SimulateRound();
-
-	void Teams();
 
 	bool IsGameOver();
 
@@ -61,6 +61,6 @@ private:
 	void handleExtraPlayers(Team& team, std::vector<Player*> eligibleFighters);
 	void addTeam1Score();
 	void addTeam2Score();
-	void nextRound();
+	void printKillFeed();
 
 };

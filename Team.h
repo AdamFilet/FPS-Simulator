@@ -4,6 +4,7 @@
 #include <string>
 #include "Player.h"
 #include "config.h"
+#include <string>
 
 class Team
 {
@@ -33,4 +34,14 @@ public:
 	void ResetHealth();
 
 	std::vector<int32_t> GetTeamsWeapons();
+
+	std::vector<std::string> GetPlayersNames();
+
+	std::vector<int32_t> GetPlayersDeaths();
+
+	std::vector<int32_t> GetPlayersKills();
+
+	std::vector<int32_t> GetPlayersRoundDamage();
+
+	std::vector<int32_t> GetPlayersTotalDamage();
 };

@@ -4,11 +4,6 @@
 
 int main()
 {
-	// TODO: Right now i am copying player and creating new varibles. I need to refrence the player instead
-	// I need to reference player so I can actually change the value rather than changing it of a new copy
-	// Going to need references in Fight, Team, and maybe GM but do not use for variables you are deleting
-	// Such as eligible player.
-	// Initialize all values in constructor rather than in class definition
 	srand(time(NULL));
 
 	GameManager gameManager = GameManager();
@@ -21,9 +16,12 @@ int main()
 			gameManager.SwitchSides();
 		}
 		gameManager.SimulateRound();
-		gameManager.PrintScore();
+		gameManager.PrintRoundStats();
 		roundCount++;
 	}
+
 	
+	gameManager.PrintScore();
+	gameManager.PrintStats();
 
 }

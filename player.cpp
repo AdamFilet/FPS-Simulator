@@ -43,6 +43,10 @@ int Player::GetCurrentHealth()
 void Player::DamageHealth(int32_t damage)
 {
 	_currentHealth -= damage;
+	if (_currentHealth < 0)
+	{
+		_currentHealth = 0;
+	}
 }
 
 int Player::GetSkillLevel()

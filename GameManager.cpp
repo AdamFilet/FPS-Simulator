@@ -9,11 +9,8 @@ GameManager::GameManager() :_team1(PLAYERS_PER_TEAM, true), _team2(PLAYERS_PER_T
 	_isPlanted = false;
 	_isDefused = false;
 	_fightsSincePlanted = 0;
-}
-
-void GameManager::nextRound()
-{
-
+	_t1Won = false;
+	_t2Won = false;
 }
 
 bool GameManager::IsRoundOver() // Check why the round isnt over after all the defenders are dead 
@@ -21,14 +18,14 @@ bool GameManager::IsRoundOver() // Check why the round isnt over after all the d
 	if (_team1.IsTeamDead())
 	{
 		_team2Score++;
-		std::cout << "Team 1 is all dead" << std::endl;
+		_t2Won = true;
 		return true;
 	}
 
 	if (_team2.IsTeamDead())
 	{
 		_team1Score++;
-		std::cout << "Team 2 is all dead" << std::endl;
+		_t1Won = true;
 		return true;
 	}
 
@@ -37,13 +34,13 @@ bool GameManager::IsRoundOver() // Check why the round isnt over after all the d
 		if (!_team1.IsAttacking())
 		{
 			_team1Score++;
-			std::cout << "Team 1 has planted" << std::endl;
+			_t1Won = true;
 			return true;
 		}
 		else
 		{
 			_team2Score++;
-			std::cout << "Team 2 has planted" << std::endl;
+			_t2Won = true;
 			return true;
 		}
 	}
@@ -53,13 +50,13 @@ bool GameManager::IsRoundOver() // Check why the round isnt over after all the d
 		if (_team1.IsAttacking())
 		{
 			_team1Score++;
-			std::cout << "Team 1 has defused" << std::endl;
+			_t1Won = true;
 			return true;
 		}
 		else
 		{
 			_team2Score++;
-			std::cout << "Team 2 has defused" << std::endl;
+			_t2Won = true;
 			return true;
 		}
 	}
@@ -117,7 +114,8 @@ void GameManager::ResetRound()
 	_fightsSincePlanted = 0;
 	_isDefused = false;
 	_isPlanted = false;
-
+	_t1Won = false;
+	_t2Won = false;
 	_team1.ResetHealth();
 	_team2.ResetHealth();
 	_team1.ResetRoundDamage();
@@ -172,11 +170,7 @@ void GameManager::StartFights()
 	{
 		fight.StartFight();
 	}
-}
-
-void GameManager::Teams()
-{
-
+	
 }
 
 bool GameManager::IsGameOver()
@@ -213,12 +207,62 @@ void GameManager::addTeam2Score()
 	_team2Score++;
 }
 
+// Print all player stats
+// Print score 
+// Who won each round EX: t1 won. 
+// Print weapon 
 void GameManager::PrintStats()
 {
-	std::cout << 
+	std::cout << std::setw(5) << "Name" << std::setw(15) << "Weapon" << std::setw(15) << "Kills" << std::setw(15) << "Deaths" << std::setw(15) << "Damage" << std::endl;
+	std::cout << "----------------------------------------------" << std::endl;
+	std::cout << "TEAM 1" << std::endl;
+	for (int i = 0; i < PLAYERS_PER_TEAM; i++)
+	{
+		std::cout << std::setw(5) << _team1.GetPlayersNames().at(i) << ": ";
+		std::cout << std::setw(7) << _team1.GetPlayersKills().at(i);
+		std::cout << std::setw(12) << _team1.GetPlayersDeaths().at(i);
+		std::cout << std::setw(17) << _team1.GetPlayersTotalDamage().at(i) << std::endl;
+	}
+	std::cout << std::endl;
+	std::cout << "TEAM 2" << std::endl;
+	for (int i = 0; i < PLAYERS_PER_TEAM; i++)
+	{
+		std::cout << std::setw(5) << _team2.GetPlayersNames().at(i) << ": ";
+		std::cout << std::setw(7) << _team2.GetPlayersKills().at(i);
+		std::cout << std::setw(12) << _team2.GetPlayersDeaths().at(i);
+		std::cout << std::setw(17) << _team2.GetPlayersRoundDamage().at(i) << std::endl;
+	}
 }
 
-void GameManager::PrintRoundStats()
+// at end of each round print killed and who planted or defused.
+// Print each players damage per round
+// Print their kills, deaths
+void GameManager::PrintRoundStats() 
+{
+	printKillFeed();
+	std::vector<int32_t> playerWeapons = _team1.GetTeamsWeapons();
+	std::cout << std::setw(5) << "Name" << std::setw(15) << "Kills" << std::setw(15) << "Deaths" << std::setw(15) << "Damage" << std::endl;
+	std::cout << "----------------------------------------------" << std::endl;
+	std::cout << "TEAM 1" << std::endl;
+	for (int i = 0; i < PLAYERS_PER_TEAM; i++)
+	{
+		std::cout << std::setw(5) << _team1.GetPlayersNames().at(i) << ": ";
+		std::cout << std::setw(7) << _team1.GetPlayersKills().at(i);
+		std::cout << std::setw(12) << _team1.GetPlayersDeaths().at(i);
+		std::cout << std::setw(17) << _team1.GetPlayersRoundDamage().at(i) << std::endl;
+	}
+	std::cout << std::endl;
+	std::cout << "TEAM 2" << std::endl;
+	for (int i = 0; i < PLAYERS_PER_TEAM; i++)
+	{
+		std::cout << std::setw(5) << _team2.GetPlayersNames().at(i) << ": ";
+		std::cout << std::setw(7) << _team2.GetPlayersKills().at(i); 
+		std::cout << std::setw(12) << _team2.GetPlayersDeaths().at(i); 
+		std::cout << std::setw(17) << _team2.GetPlayersRoundDamage().at(i) << std::endl;
+	}
+}
+
+void GameManager::printKillFeed()
 {
 
 }

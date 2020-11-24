@@ -10,11 +10,6 @@ private:
 	std::vector<Player*> _defenders;
 	class GameManager* _gameManager;
 
-private:
-	void handleFight(Player& attacker, Player& defender);
-	void plantBomb(Player& planter);
-	void defuseBomb(Player& defuser);
-	void oneSidedFight(Player& fighter, Player& defuserOrPlanter);
 
 public:
 	Fight(Player& one, Player& two, GameManager* gameManager);
@@ -27,5 +22,10 @@ public:
 
 	void StartFight();
 
-	
+private:
+	void handleFight(Player& attacker, Player& defender);
+	void plantBomb(Player& planter);
+	void defuseBomb(Player& defuser);
+	void oneSidedFight(Player& fighter, Player& defuserOrPlanter);
+
 };

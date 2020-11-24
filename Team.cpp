@@ -3,7 +3,7 @@
 Team::Team(int playerCount, bool isAttacking)
 {
 	_isAttacking = isAttacking;
-	
+
 	for (int i = 0; i < playerCount; i++)
 	{
 		std::string name = "Player " + std::to_string(i);
@@ -91,4 +91,52 @@ std::vector<int32_t> Team::GetTeamsWeapons()
 	return playersWeapons; // Dont know if this will work, maybe because each weapon is just a value
 }
 
+std::vector<std::string> Team::GetPlayersNames()
+{
+	std::vector<std::string> playerNames;
+	for (Player& playerName: _players)
+	{
+		playerNames.push_back(playerName.GetName());
+	}
+	return playerNames;
+}
 
+std::vector<int32_t> Team::GetPlayersDeaths()
+{
+	std::vector<int32_t> playersDeaths;
+	for (Player& playerDeath : _players)
+	{
+		playersDeaths.push_back(playerDeath.GetDeath());
+	}
+	return playersDeaths;
+}
+
+std::vector<int32_t> Team::GetPlayersKills()
+{
+	std::vector<int32_t> playerKills;
+	for (Player& playerKill : _players)
+	{
+		playerKills.push_back(playerKill.GetKills());
+	}
+	return playerKills;
+}
+
+std::vector<int32_t> Team::GetPlayersRoundDamage()
+{
+	std::vector<int32_t> playersDamage;
+	for (Player& playerDamage: _players)
+	{
+		playersDamage.push_back(playerDamage.GetRoundDamage());
+	}
+	return playersDamage;
+}
+
+std::vector<int32_t> Team::GetPlayersTotalDamage()
+{
+	std::vector<int32_t> playersDamage;
+	for (Player& playerDamage : _players)
+	{
+		playersDamage.push_back(playerDamage.GetTotalGameDamage());
+	}
+	return playersDamage;
+}
