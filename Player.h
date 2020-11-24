@@ -48,7 +48,7 @@ public:
     int GetSkillLevel();
 
     /* Weapon Getters */
-    int GetPlayerWeapon();
+    WeaponsTypes GetPlayerWeapon();
     int GetPlayerWeaponAccuracy();
     int GetPlayerWeaponDamage();
     int GetCurrentAmmo();

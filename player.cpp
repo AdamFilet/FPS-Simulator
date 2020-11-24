@@ -71,7 +71,7 @@ int Player::GetCurrentAmmo()
 	return _weapon.GetAmmo();
 }
 
-int Player::GetPlayerWeapon()
+WeaponsTypes Player::GetPlayerWeapon()
 {
 	return _weapon.GetWeapon();
 }

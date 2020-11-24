@@ -219,18 +219,20 @@ void GameManager::PrintStats()
 	for (int i = 0; i < PLAYERS_PER_TEAM; i++)
 	{
 		std::cout << std::setw(5) << _team1.GetPlayersNames().at(i) << ": ";
-		std::cout << std::setw(7) << _team1.GetPlayersKills().at(i);
-		std::cout << std::setw(12) << _team1.GetPlayersDeaths().at(i);
-		std::cout << std::setw(17) << _team1.GetPlayersTotalDamage().at(i) << std::endl;
+		std::cout << std::setw(7) << _team1.GetTeamsWeapons().at(i);
+		std::cout << std::setw(12) << _team1.GetPlayersKills().at(i);
+		std::cout << std::setw(17) << _team1.GetPlayersDeaths().at(i);
+		std::cout << std::setw(21) << _team1.GetPlayersTotalDamage().at(i) << std::endl;
 	}
 	std::cout << std::endl;
 	std::cout << "TEAM 2" << std::endl;
 	for (int i = 0; i < PLAYERS_PER_TEAM; i++)
 	{
 		std::cout << std::setw(5) << _team2.GetPlayersNames().at(i) << ": ";
-		std::cout << std::setw(7) << _team2.GetPlayersKills().at(i);
-		std::cout << std::setw(12) << _team2.GetPlayersDeaths().at(i);
-		std::cout << std::setw(17) << _team2.GetPlayersRoundDamage().at(i) << std::endl;
+		std::cout << std::setw(7) << _team2.GetTeamsWeapons().at(i);
+		std::cout << std::setw(12) << _team2.GetPlayersKills().at(i);
+		std::cout << std::setw(17) << _team2.GetPlayersDeaths().at(i);
+		std::cout << std::setw(21) << _team2.GetPlayersTotalDamage().at(i) << std::endl;
 	}
 }
 
@@ -240,7 +242,6 @@ void GameManager::PrintStats()
 void GameManager::PrintRoundStats() 
 {
 	printKillFeed();
-	std::vector<int32_t> playerWeapons = _team1.GetTeamsWeapons();
 	std::cout << std::setw(5) << "Name" << std::setw(15) << "Kills" << std::setw(15) << "Deaths" << std::setw(15) << "Damage" << std::endl;
 	std::cout << "----------------------------------------------" << std::endl;
 	std::cout << "TEAM 1" << std::endl;
@@ -250,6 +251,7 @@ void GameManager::PrintRoundStats()
 		std::cout << std::setw(7) << _team1.GetPlayersKills().at(i);
 		std::cout << std::setw(12) << _team1.GetPlayersDeaths().at(i);
 		std::cout << std::setw(17) << _team1.GetPlayersRoundDamage().at(i) << std::endl;
+
 	}
 	std::cout << std::endl;
 	std::cout << "TEAM 2" << std::endl;

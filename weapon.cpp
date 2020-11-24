@@ -1,21 +1,12 @@
 #include "weapon.h"
 
-enum Weapons
-{
-	R4C,
-	L85A2,
-	MPX,
-	K1A,
-	GP41
-};
-
 Weapon::Weapon()
 {
 	_initialCapacity = 0;
 	_ammo = 0;
 	_damage = 0;
 	_accuracy = 0;
-	_weaponType = (Weapons) (rand() % 4);
+	_weaponType = (WeaponsTypes) (rand() % 5);
 
 	if (_weaponType == R4C)
 	{
@@ -56,7 +47,7 @@ Weapon::Weapon()
 }
 
 
-int32_t Weapon::GetWeapon()
+WeaponsTypes Weapon::GetWeapon()
 {
 	return _weaponType;
 }

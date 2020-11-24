@@ -1,10 +1,19 @@
 #pragma once
 #include <iostream>
 
+enum WeaponsTypes
+{
+	R4C,
+	L85A2,
+	MPX,
+	K1A,
+	GP41
+};
+
 class Weapon
 {
 private:
-	int32_t _weaponType;
+	WeaponsTypes _weaponType;
 	uint32_t _initialCapacity;
 	uint32_t _ammo;
 	uint32_t _damage;
@@ -12,7 +21,7 @@ private:
 public:
 	Weapon();
 	
-	int32_t GetWeapon();
+	WeaponsTypes GetWeapon();
 
 	void ShotingBullets();
 

@@ -80,15 +80,34 @@ void Team::ResetHealth()
 	}
 }
 
-std::vector<int32_t> Team::GetTeamsWeapons()
+std::vector<std::string> Team::GetTeamsWeapons()
 {
-	std::vector<int32_t> playersWeapons;
+	std::vector<std::string> playersWeapons;
 	for (int i = 0; i < _players.size(); i++)
 	{
-		int32_t weapon = _players.at(i).GetPlayerWeapon();
-		playersWeapons.push_back(weapon);
+		WeaponsTypes weapon = _players.at(i).GetPlayerWeapon();
+		if (weapon == 0)
+		{
+			playersWeapons.push_back("R4C");
+		}
+		else if (weapon == 1)
+		{
+			playersWeapons.push_back("L85A2");
+		}
+		else if (weapon == 2)
+		{
+			playersWeapons.push_back("MPX");
+		}
+		else if (weapon == 3)
+		{
+			playersWeapons.push_back("K1A");
+		}
+		else if (weapon == 4)
+		{
+			playersWeapons.push_back("GP41");
+		}
 	}
-	return playersWeapons; // Dont know if this will work, maybe because each weapon is just a value
+	return playersWeapons; 
 }
 
 std::vector<std::string> Team::GetPlayersNames()

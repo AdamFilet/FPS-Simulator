@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "config.h"
 #include <string>
+#include "weapon.h"
 
 class Team
 {
@@ -33,7 +34,7 @@ public:
 
 	void ResetHealth();
 
-	std::vector<int32_t> GetTeamsWeapons();
+	std::vector<std::string> GetTeamsWeapons();
 
 	std::vector<std::string> GetPlayersNames();
 
