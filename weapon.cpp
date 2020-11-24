@@ -11,7 +11,11 @@ enum Weapons
 
 Weapon::Weapon()
 {
-	 _weaponType = (Weapons) (rand() % 4);
+	_initialCapacity = 0;
+	_ammo = 0;
+	_damage = 0;
+	_accuracy = 0;
+	_weaponType = (Weapons) (rand() % 4);
 
 	if (_weaponType == R4C)
 	{

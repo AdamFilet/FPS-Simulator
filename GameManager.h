@@ -14,18 +14,13 @@ private:
 	Team _team1;
 	Team _team2;
 
-	int32_t _team1Score = 0;
-	int32_t _team2Score = 0;
-	int32_t _roundCount = 0;
-	bool _isPlanted = false;
-	bool _isDefused = false;
-	int32_t _fightsSincePlanted = 0;
+	int32_t _team1Score;
+	int32_t _team2Score;
+	int32_t _roundCount;
+	bool _isPlanted;
+	bool _isDefused;
+	int32_t _fightsSincePlanted;
 
-private:
-	void handleExtraPlayers(Team team, std::vector<Player> eligibleFighters);
-	void addTeam1Score();
-	void addTeam2Score();
-	void nextRound();
 
 public:
 	GameManager();
@@ -57,4 +52,15 @@ public:
 	void BombPlanted();
 
 	void BombDefused();
+
+	void PrintStats();
+
+	void PrintRoundStats();
+
+private:
+	void handleExtraPlayers(Team& team, std::vector<Player*> eligibleFighters);
+	void addTeam1Score();
+	void addTeam2Score();
+	void nextRound();
+
 };

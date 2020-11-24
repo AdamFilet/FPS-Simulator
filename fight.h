@@ -6,8 +6,8 @@
 class Fight
 {
 private:
-	std::vector<Player> _attackers;
-	std::vector<Player> _defenders;
+	std::vector<Player*> _attackers;
+	std::vector<Player*> _defenders;
 	class GameManager* _gameManager;
 
 private:
@@ -17,11 +17,11 @@ private:
 	void oneSidedFight(Player& fighter, Player& defuserOrPlanter);
 
 public:
-	Fight(Player one, Player two, GameManager* gameManager);
+	Fight(Player& one, Player& two, GameManager* gameManager);
 
-	void AddAttacker(Player NewAttacker);
+	void AddAttacker(Player& newAttacker);
 
-	void AddDefender(Player NewDefender);
+	void AddDefender(Player& newDefender);
 
 	int32_t FighterCount();
 

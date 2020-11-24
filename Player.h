@@ -8,18 +8,20 @@ private:
     class Team* _team;
 
     Weapon _weapon;
-    uint32_t _magazineCapacity = _weapon.InitialCapacity();
-    int32_t _initialHealth = 100;
-    int32_t _currentHealth = 100;
-    int32_t _skill = 0;
-    int32_t _priority = 0;
-    int32_t _score = 0;
-    uint32_t _kills = 0;
-    uint32_t _assist = 0;
-    uint32_t _death = 0;
-    uint32_t _amountOfPlants = 0;
-    uint32_t _amountOfDefuses = 0;
+    uint32_t _magazineCapacity;
+    int32_t _initialHealth;
+    int32_t _currentHealth;
+    int32_t _skill;
+    int32_t _priority;
+    int32_t _score;
+    uint32_t _kills;
+    uint32_t _assist;
+    uint32_t _death;
+    uint32_t _amountOfPlants;
+    uint32_t _amountOfDefuses;
     std::string _name;
+    uint32_t _totalGameDamage;
+    uint32_t _totalRoundDamage;
 
 public:
 
@@ -35,6 +37,8 @@ public:
     void IncrementDefuses();
     void TriggeredKill();
     void Assisted();
+    void ResetRoundDamage();
+    void IncrementDamageDone(int32_t damage);
 
     /* Player Stat Getters */
     int GetScore();
@@ -58,6 +62,8 @@ public:
     int GetPlants();
     int GetDefuses();
     std::string GetName();
+    int GetTotalGameDamage();
+    int GetRoundDamage();
 
     /* Checkers */
     bool IsAlive();

@@ -1,5 +1,5 @@
 #include "Team.h"
-
+// Going to prolly need references for this
 Team::Team(int playerCount, bool isAttacking)
 {
 	_isAttacking = isAttacking;
@@ -26,11 +26,10 @@ void Team::SwitchSide()
 	_isAttacking = !_isAttacking;
 }
 
-bool Team::IsTeamDead() // No one is every dying, unknown why
+bool Team::IsTeamDead() 
 {
-	for (int i = 0; i < _players.size(); i++)
+	for (Player& player: _players)
 	{
-		Player player = _players.at(i);
 		if (player.IsAlive())
 		{
 			return false; 
@@ -39,38 +38,45 @@ bool Team::IsTeamDead() // No one is every dying, unknown why
 	return true;
 }
 
-std::vector<Player> Team::GetEligiblePlayers()
+std::vector<Player*> Team::GetEligiblePlayers()
 {
-	std::vector<Player> EligiblePlayers;
-	for (int i = 0; i < _players.size(); i++)
+	std::vector<Player*> EligiblePlayers;
+	for (Player& tempPlayer : _players)
 	{
-		Player temp = _players.at(i);
-		if (temp.IsAlive())
+		if (tempPlayer.IsAlive())
 		{
-			EligiblePlayers.push_back(temp);
+			EligiblePlayers.push_back(&tempPlayer);
 		}
 	}
 	return EligiblePlayers;
 }
 
-std::vector<Player> Team::GetAllPlayers()
+std::vector<Player>& Team::GetAllPlayers()
 {
 	return _players;
 }
 
 void Team::ResetAmmo()
 {
-	for (int i = 0; i < _players.size(); i++)
+	for (Player& player : _players)
 	{
-		_players.at(i).ResetAmmo();
+		player.ResetAmmo();
+	}
+}
+
+void Team::ResetRoundDamage()
+{
+	for (Player& player : _players)
+	{
+		player.ResetRoundDamage();
 	}
 }
 
 void Team::ResetHealth()
 {
-	for (int i = 0; i < _players.size(); i++)
+	for (Player& player : _players)
 	{
-		_players.at(i).ResetHealth();
+		player.ResetHealth();
 	}
 }
 

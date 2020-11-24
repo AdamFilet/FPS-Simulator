@@ -1,18 +1,18 @@
 #include "fight.h"
 #include "GameManager.h"
 
-Fight::Fight(Player one, Player two, GameManager* gameManager)
+Fight::Fight(Player& one, Player& two, GameManager* gameManager)
 {
 	_gameManager = gameManager;
 	if (one.IsAttacking())
 	{
-		_attackers.push_back(one);
-		_defenders.push_back(two);
+		_attackers.push_back(&one);
+		_defenders.push_back(&two);
 	}
 	else
 	{
-		_defenders.push_back(two);
-		_attackers.push_back(one);
+		_defenders.push_back(&two);
+		_attackers.push_back(&one);
 	}
 }
 
@@ -21,14 +21,14 @@ int32_t Fight::FighterCount()
 	return _attackers.size() + _defenders.size();
 }
 
-void Fight::AddAttacker(Player NewAttacker)
+void Fight::AddAttacker(Player& NewAttacker)
 {
-	_attackers.push_back(NewAttacker);
+	_attackers.push_back(&NewAttacker);
 }
 
-void Fight::AddDefender(Player NewDefender)
+void Fight::AddDefender(Player& NewDefender)
 {
-	_defenders.push_back(NewDefender);
+	_defenders.push_back(&NewDefender);
 }
 
 void Fight::StartFight()
@@ -38,9 +38,9 @@ void Fight::StartFight()
 
 	if (numOfAttackers < numOfDefenders) 
 	{
-		Player& attacker = _attackers.at(0); 
-		Player& defender = _defenders.at(0);
-		Player& defuser = _defenders.at(1);
+		Player& attacker = *_attackers.at(0);
+		Player& defender = *_defenders.at(0);
+		Player& defuser = *_defenders.at(1);
 			
 		int32_t chanceToFindDefuser = rand() % 100;
 
@@ -64,9 +64,9 @@ void Fight::StartFight()
 	}
 	else if (numOfDefenders < numOfAttackers)
 	{
-		Player attacker = _attackers.at(0); 
-		Player planter = _attackers.at(1);
-		Player defender = _defenders.at(0);
+		Player& attacker = *_attackers.at(0); 
+		Player& planter = *_attackers.at(1);
+		Player& defender = *_defenders.at(0);
 
 		int32_t chanceToFindPlanter = rand() % 100;
 
@@ -91,13 +91,13 @@ void Fight::StartFight()
 	}
 	else
 	{
-		Player defender = _defenders.at(0);  
-		Player attacker = _attackers.at(0);
+		Player& defender = *_defenders.at(0);
+		Player& attacker = *_attackers.at(0);
 		handleFight(attacker, defender);
 	}
 }
 
-void Fight::handleFight(Player attacker, Player defender) // Only defender is dying, unknown reason
+void Fight::handleFight(Player& attacker, Player& defender) // Only defender is dying, unknown reason
 {
 	while (attacker.IsAlive() && defender.IsAlive())
 	{
@@ -129,6 +129,7 @@ void Fight::handleFight(Player attacker, Player defender) // Only defender is dy
 				if (randomizeAttackerAccuracy <= attackerAccuracy)
 				{
 					defender.DamageHealth(attackerDamange);
+					attacker.IncrementDamageDone(attackerDamange);
 				}
 				attacker.ShotBullet();
 				if (defender.IsDead())
@@ -159,6 +160,7 @@ void Fight::handleFight(Player attacker, Player defender) // Only defender is dy
 				if (randomizeDefenderAccuracy <= defenderAccuracy)
 				{
 					attacker.DamageHealth(defenderDamage); 
+					defender.IncrementDamageDone(defenderDamage);
 				}
 				defender.ShotBullet();
 				if (attacker.IsDead())
@@ -176,7 +178,7 @@ void Fight::handleFight(Player attacker, Player defender) // Only defender is dy
 	}
 }
 
-void Fight::plantBomb(Player planter)
+void Fight::plantBomb(Player& planter)
 {
 	int32_t chanceToPlant = rand() % 100;
 	if (chanceToPlant <= CHANCE_TO_PLANT_BOMB)
@@ -186,7 +188,7 @@ void Fight::plantBomb(Player planter)
 	}
 }
 
-void Fight::defuseBomb(Player defuser)
+void Fight::defuseBomb(Player& defuser)
 {
 	int32_t chanceToDefuse = rand() % 100;
 	if (chanceToDefuse <= CHANCE_TO_DEFUSE_BOMB)
@@ -196,17 +198,18 @@ void Fight::defuseBomb(Player defuser)
 	}
 }
 
-void Fight::oneSidedFight(Player fighter, Player defuserOrPlanter)
+void Fight::oneSidedFight(Player& fighter, Player& defuserOrPlanter)
 {
 	int32_t fighterAccuracy = fighter.GetPlayerWeaponAccuracy();
 
 	while (fighter.GetCurrentAmmo() != 0)
 	{
 		int32_t randomizeAccuracy = rand() % 100;
-		int32_t attackerDamange = fighter.GetPlayerWeaponDamage();
+		int32_t fighterDamage = fighter.GetPlayerWeaponDamage();
 		if (randomizeAccuracy <= fighterAccuracy)
 		{
-			defuserOrPlanter.DamageHealth(attackerDamange);
+			defuserOrPlanter.DamageHealth(fighterDamage);
+			fighter.IncrementDamageDone(fighterDamage);
 		}
 		fighter.ShotBullet();
 		if(defuserOrPlanter.IsDead())

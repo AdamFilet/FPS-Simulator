@@ -5,10 +5,10 @@ class Weapon
 {
 private:
 	int32_t _weaponType;
-	uint32_t _initialCapacity = 0;
-	uint32_t _ammo = 0;
-	uint32_t _damage = 0;
-	uint32_t _accuracy = 0;
+	uint32_t _initialCapacity;
+	uint32_t _ammo;
+	uint32_t _damage;
+	uint32_t _accuracy;
 public:
 	Weapon();
 	

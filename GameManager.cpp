@@ -1,8 +1,14 @@
-#include <iostream>
-#include "GameManager.h"
+#include <iostream> 
+#include "GameManager.h" 
 
 GameManager::GameManager() :_team1(PLAYERS_PER_TEAM, true), _team2(PLAYERS_PER_TEAM, false)
 {
+	_team1Score = 0;
+	_team2Score = 0;
+	_roundCount = 0;
+	_isPlanted = false;
+	_isDefused = false;
+	_fightsSincePlanted = 0;
 }
 
 void GameManager::nextRound()
@@ -10,7 +16,7 @@ void GameManager::nextRound()
 
 }
 
-bool GameManager::IsRoundOver() // Check why the round isnt over after all the defenders are dead
+bool GameManager::IsRoundOver() // Check why the round isnt over after all the defenders are dead 
 {
 	if (_team1.IsTeamDead())
 	{
@@ -19,7 +25,7 @@ bool GameManager::IsRoundOver() // Check why the round isnt over after all the d
 		return true;
 	}
 
-	 if (_team2.IsTeamDead())
+	if (_team2.IsTeamDead())
 	{
 		_team1Score++;
 		std::cout << "Team 2 is all dead" << std::endl;
@@ -62,17 +68,17 @@ bool GameManager::IsRoundOver() // Check why the round isnt over after all the d
 
 void GameManager::Matchmake()
 {
-	std::vector<Player> eligibleFighters1 = _team1.GetEligiblePlayers();
-	std::vector<Player> eligibleFighters2 = _team2.GetEligiblePlayers();
+	std::vector<Player*> eligibleFighters1 = _team1.GetEligiblePlayers();
+	std::vector<Player*> eligibleFighters2 = _team2.GetEligiblePlayers();
 
-	while (eligibleFighters1.size() != 0 || eligibleFighters2. size() != 0)
+	while (eligibleFighters1.size() != 0 && eligibleFighters2.size() != 0)
 	{
 		int32_t i = rand() % eligibleFighters1.size();
-		int32_t i2 = rand() % eligibleFighters2.size();
-		Player p1 = eligibleFighters1.at(i);
-		Player p2 = eligibleFighters2.at(i2);
+		int32_t i2 = rand() % eligibleFighters2.size(); // Problems occurs here
+		Player* p1 = eligibleFighters1.at(i);
+		Player* p2 = eligibleFighters2.at(i2);
 
-		Fight tempFight = Fight(p1, p2, this); 
+		Fight tempFight = Fight(*p1, *p2, this);
 		_fights.push_back(tempFight);
 
 		eligibleFighters1.erase(eligibleFighters1.begin() + i);
@@ -80,7 +86,7 @@ void GameManager::Matchmake()
 
 	}
 
-	//TODO: Team might need to be referenced 
+	//TODO: Team might need to be referenced  
 	handleExtraPlayers(_team1, eligibleFighters1);
 	handleExtraPlayers(_team2, eligibleFighters2);
 	_roundCount++;
@@ -111,15 +117,16 @@ void GameManager::ResetRound()
 	_fightsSincePlanted = 0;
 	_isDefused = false;
 	_isPlanted = false;
-	
+
 	_team1.ResetHealth();
 	_team2.ResetHealth();
-
+	_team1.ResetRoundDamage();
+	_team2.ResetRoundDamage();
 }
 
-void GameManager::handleExtraPlayers(Team team, std::vector<Player> eligibleFighters)
+void GameManager::handleExtraPlayers(Team& team, std::vector<Player*> eligibleFighters)
 {
-	for (Player& currentFighter : eligibleFighters)
+	for (Player* currentFighter : eligibleFighters)
 	{
 		for (Fight& currentFight : _fights)
 		{
@@ -130,11 +137,11 @@ void GameManager::handleExtraPlayers(Team team, std::vector<Player> eligibleFigh
 				{
 					if (team.IsAttacking())
 					{
-						currentFight.AddAttacker(currentFighter);
+						currentFight.AddAttacker(*currentFighter);
 					}
 					else
 					{
-						currentFight.AddDefender(currentFighter);
+						currentFight.AddDefender(*currentFighter);
 					}
 					break;
 				}
@@ -161,9 +168,9 @@ void GameManager::StartFights()
 {
 	_team1.ResetAmmo();
 	_team2.ResetAmmo();
-	for (int i = 0; i < _fights.size(); i++)
+	for (Fight& fight : _fights)
 	{
-		_fights.at(i).StartFight();
+		fight.StartFight();
 	}
 }
 
@@ -179,7 +186,7 @@ bool GameManager::IsGameOver()
 
 int GameManager::Score()
 {
-	
+
 	return 0;
 }
 
@@ -204,4 +211,14 @@ void GameManager::addTeam1Score()
 void GameManager::addTeam2Score()
 {
 	_team2Score++;
+}
+
+void GameManager::PrintStats()
+{
+	std::cout << 
+}
+
+void GameManager::PrintRoundStats()
+{
+
 }

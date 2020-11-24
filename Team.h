@@ -10,6 +10,7 @@ class Team
 private:
 	std::vector<Player> _players;
 	bool _isAttacking;
+
 public:
 	Team(int playerCount, bool isAttacking);
 
@@ -21,11 +22,13 @@ public:
 	
 	bool IsTeamDead();
 
-	std::vector<Player> GetEligiblePlayers();
+	std::vector<Player*> GetEligiblePlayers();
 
-	std::vector<Player> GetAllPlayers();
+	std::vector<Player>& GetAllPlayers();
 
 	void ResetAmmo();
+
+	void ResetRoundDamage();
 
 	void ResetHealth();
 
