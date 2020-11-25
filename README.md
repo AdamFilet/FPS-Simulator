@@ -6,7 +6,7 @@ There are no graphics and this program runs on randomization in order to simulat
 
   
 
-It simulates 5 attackers fighting 5 defenders. The defenders have to try and plant the bomb and protect it for three rounds. If the attackers defuse the bomb, the defenders lose. After 16 rounds it's halftime and the teams switch. If one team dies then the other team wins. First team to win sixteen rounds wins the game.
+It simulates 5 attackers fighting 5 defenders. The defenders have to try and plant the bomb and protect it for three rounds. If the attackers defuse the bomb, the defenders lose. After 16 rounds it's halftime and the teams switch. If no one is left on one team then the other team wins. First team to win sixteen rounds wins the game.
 
   
 
