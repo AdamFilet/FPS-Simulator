@@ -14,9 +14,10 @@ private:
     int32_t _skill;
     int32_t _priority;
     int32_t _score;
-    uint32_t _kills;
-    uint32_t _assist;
-    uint32_t _death;
+    uint32_t _totalDeaths;
+    uint32_t _totalKills;
+    uint32_t _roundKills;
+    uint32_t _roundDeaths;
     uint32_t _amountOfPlants;
     uint32_t _amountOfDefuses;
     std::string _name;
@@ -36,40 +37,39 @@ public:
     void IncrementPlants();
     void IncrementDefuses();
     void TriggeredKill();
-    void Assisted();
     void ResetRoundDamage();
     void IncrementDamageDone(int32_t damage);
+    void ResetRoundKillsAndDeaths();
 
     /* Player Stat Getters */
-    int GetScore();
-    int GetCurrentHealth();
-    int GetInitialHealth();
-    int GetPriorityLevel();
-    int GetSkillLevel();
+    int32_t GetScore();
+    int32_t GetCurrentHealth();
+    int32_t GetInitialHealth();
+    int32_t GetPriorityLevel();
+    int32_t GetSkillLevel();
 
     /* Weapon Getters */
-    WeaponsTypes GetPlayerWeapon();
-    int GetPlayerWeaponAccuracy();
-    int GetPlayerWeaponDamage();
-    int GetCurrentAmmo();
+    std::string GetPlayerWeapon();
+    int32_t GetPlayerWeaponAccuracy();
+    int32_t GetPlayerWeaponDamage();
+    int32_t GetCurrentAmmo();
 
     /* Stat Getters */
-    int GetBulletShots();
-    int GetBulletHits();
-    int GetKills();
-    int GetAssist();
-    int GetDeath();
-    int GetPlants();
-    int GetDefuses();
+    int32_t GetBulletShots();
+    int32_t GetBulletHits();
+    int32_t GetTotalKills();
+    int32_t GetTotalDeaths();
+    int32_t GetPlants();
+    int32_t GetDefuses();
     std::string GetName();
-    int GetTotalGameDamage();
-    int GetRoundDamage();
+    int32_t GetTotalGameDamage();
+    int32_t GetRoundDamage();
+    int32_t GetRoundKills();
+    int32_t GetRoundDeaths();
 
     /* Checkers */
     bool IsAlive();
     bool IsDead();
     bool IsAttacking();
     bool HasDefuser();
-
-    /* Uncategorizable with current names */
 };

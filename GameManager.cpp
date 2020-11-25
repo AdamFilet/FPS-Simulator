@@ -8,9 +8,9 @@ GameManager::GameManager() :_team1(PLAYERS_PER_TEAM, true), _team2(PLAYERS_PER_T
 	_roundCount = 0;
 	_isPlanted = false;
 	_isDefused = false;
+	t1Won = false;
+	t2Won = false;
 	_fightsSincePlanted = 0;
-	_t1Won = false;
-	_t2Won = false;
 }
 
 bool GameManager::IsRoundOver() // Check why the round isnt over after all the defenders are dead 
@@ -18,14 +18,14 @@ bool GameManager::IsRoundOver() // Check why the round isnt over after all the d
 	if (_team1.IsTeamDead())
 	{
 		_team2Score++;
-		_t2Won = true;
+		t2Won = true;
 		return true;
 	}
 
 	if (_team2.IsTeamDead())
 	{
 		_team1Score++;
-		_t1Won = true;
+		t1Won = true;
 		return true;
 	}
 
@@ -34,13 +34,13 @@ bool GameManager::IsRoundOver() // Check why the round isnt over after all the d
 		if (!_team1.IsAttacking())
 		{
 			_team1Score++;
-			_t1Won = true;
+			t1Won = true;
 			return true;
 		}
 		else
 		{
 			_team2Score++;
-			_t2Won = true;
+			t2Won = true;
 			return true;
 		}
 	}
@@ -50,13 +50,13 @@ bool GameManager::IsRoundOver() // Check why the round isnt over after all the d
 		if (_team1.IsAttacking())
 		{
 			_team1Score++;
-			_t1Won = true;
+			t1Won = true;
 			return true;
 		}
 		else
 		{
 			_team2Score++;
-			_t2Won = true;
+			t2Won = true;
 			return true;
 		}
 	}
@@ -114,12 +114,15 @@ void GameManager::ResetRound()
 	_fightsSincePlanted = 0;
 	_isDefused = false;
 	_isPlanted = false;
-	_t1Won = false;
-	_t2Won = false;
+	t1Won = false;
+	t2Won = false;
 	_team1.ResetHealth();
 	_team2.ResetHealth();
 	_team1.ResetRoundDamage();
 	_team2.ResetRoundDamage();
+	_team1.ResetRoundKillsAndDeaths();
+	_team2.ResetRoundKillsAndDeaths();
+	
 }
 
 void GameManager::handleExtraPlayers(Team& team, std::vector<Player*> eligibleFighters)
@@ -207,60 +210,72 @@ void GameManager::addTeam2Score()
 	_team2Score++;
 }
 
-// Print all player stats
-// Print score 
-// Who won each round EX: t1 won. 
-// Print weapon 
 void GameManager::PrintStats()
 {
-	std::cout << std::setw(5) << "Name" << std::setw(15) << "Weapon" << std::setw(15) << "Kills" << std::setw(15) << "Deaths" << std::setw(15) << "Damage" << std::endl;
-	std::cout << "----------------------------------------------" << std::endl;
+	std::cout << std::setw(5) << "Name" << std::setw(15) << "Score" << std::setw(15) << "Weapon";
+	std::cout << std::setw(15) << "Kills" << std::setw(15) << "Deaths" << std::setw(15) << "Damage";
+	std::cout << std::setw(15) << "Plants" << std::setw(15) << "Defuses" << std::endl;
+	std::cout << "--------------------------------------------------------------------------------------------------------------" << std::endl;
 	std::cout << "TEAM 1" << std::endl;
-	for (int i = 0; i < PLAYERS_PER_TEAM; i++)
+	// returning vectors just call player functions
+	for (Player& player : _team1.GetAllPlayers())
 	{
-		std::cout << std::setw(5) << _team1.GetPlayersNames().at(i) << ": ";
-		std::cout << std::setw(7) << _team1.GetTeamsWeapons().at(i);
-		std::cout << std::setw(12) << _team1.GetPlayersKills().at(i);
-		std::cout << std::setw(17) << _team1.GetPlayersDeaths().at(i);
-		std::cout << std::setw(21) << _team1.GetPlayersTotalDamage().at(i) << std::endl;
+		std::cout << std::setw(5) << player.GetName() << ": ";
+		std::cout << std::setw(10) << player.GetScore();
+		std::cout << std::setw(14) << player.GetPlayerWeapon();
+		std::cout << std::setw(14) << player.GetTotalKills();
+		std::cout << std::setw(14) << player.GetTotalDeaths();
+		std::cout << std::setw(16) << player.GetTotalGameDamage();
+		std::cout << std::setw(15) << player.GetPlants();
+		std::cout << std::setw(15) << player.GetDefuses() << std::endl;	
 	}
 	std::cout << std::endl;
 	std::cout << "TEAM 2" << std::endl;
-	for (int i = 0; i < PLAYERS_PER_TEAM; i++)
+	for (Player& player : _team2.GetAllPlayers())
 	{
-		std::cout << std::setw(5) << _team2.GetPlayersNames().at(i) << ": ";
-		std::cout << std::setw(7) << _team2.GetTeamsWeapons().at(i);
-		std::cout << std::setw(12) << _team2.GetPlayersKills().at(i);
-		std::cout << std::setw(17) << _team2.GetPlayersDeaths().at(i);
-		std::cout << std::setw(21) << _team2.GetPlayersTotalDamage().at(i) << std::endl;
+		std::cout << std::setw(5) << player.GetName() << ": ";
+		std::cout << std::setw(10) << player.GetScore();
+		std::cout << std::setw(14) << player.GetPlayerWeapon();
+		std::cout << std::setw(14) << player.GetTotalKills();
+		std::cout << std::setw(14) << player.GetTotalDeaths();
+		std::cout << std::setw(16) << player.GetTotalGameDamage();
+		std::cout << std::setw(15) << player.GetPlants();
+		std::cout << std::setw(15) << player.GetDefuses() << std::endl;
 	}
 }
 
-// at end of each round print killed and who planted or defused.
-// Print each players damage per round
-// Print their kills, deaths
+//Killfeed by saying who killed who in plant
 void GameManager::PrintRoundStats() 
 {
 	printKillFeed();
-	std::cout << std::setw(5) << "Name" << std::setw(15) << "Kills" << std::setw(15) << "Deaths" << std::setw(15) << "Damage" << std::endl;
-	std::cout << "----------------------------------------------" << std::endl;
+	std::cout << std::setw(5) << "Name" << std::setw(15) << "Kills" << std::setw(15);
+	std::cout << "Deaths" << std::setw(15) << "Damage" << std::endl;
+	std::cout << "---------------------------------------------------" << std::endl;
 	std::cout << "TEAM 1" << std::endl;
-	for (int i = 0; i < PLAYERS_PER_TEAM; i++)
+	for (Player& player: _team1.GetAllPlayers())
 	{
-		std::cout << std::setw(5) << _team1.GetPlayersNames().at(i) << ": ";
-		std::cout << std::setw(7) << _team1.GetPlayersKills().at(i);
-		std::cout << std::setw(12) << _team1.GetPlayersDeaths().at(i);
-		std::cout << std::setw(17) << _team1.GetPlayersRoundDamage().at(i) << std::endl;
+		std::cout << std::setw(5) << player.GetName() << ": ";
+		std::cout << std::setw(7) << player.GetRoundKills();
+		std::cout << std::setw(12) << player.GetRoundDeaths();
+		std::cout << std::setw(17) << player.GetRoundDamage() << std::endl;
 
 	}
 	std::cout << std::endl;
 	std::cout << "TEAM 2" << std::endl;
-	for (int i = 0; i < PLAYERS_PER_TEAM; i++)
+	for (Player& player : _team2.GetAllPlayers())
 	{
-		std::cout << std::setw(5) << _team2.GetPlayersNames().at(i) << ": ";
-		std::cout << std::setw(7) << _team2.GetPlayersKills().at(i); 
-		std::cout << std::setw(12) << _team2.GetPlayersDeaths().at(i); 
-		std::cout << std::setw(17) << _team2.GetPlayersRoundDamage().at(i) << std::endl;
+		std::cout << std::setw(5) << player.GetName() << ": ";
+		std::cout << std::setw(7) << player.GetRoundKills();
+		std::cout << std::setw(12) << player.GetRoundDeaths();
+		std::cout << std::setw(17) << player.GetRoundDamage() << std::endl;
+	}
+	if (t1Won)
+	{
+		std::cout << "TEAM 1 WON!" << std::endl;
+	}
+	if (t2Won)
+	{
+		std::cout << "TEAM 2 WON!" << std::endl;
 	}
 }
 

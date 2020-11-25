@@ -14,13 +14,13 @@ private:
 	std::vector<Fight> _fights;
 	Team _team1;
 	Team _team2;
-	bool _t1Won;
-	bool _t2Won;
 	int32_t _team1Score;
 	int32_t _team2Score;
 	int32_t _roundCount;
 	bool _isPlanted;
 	bool _isDefused;
+	bool t1Won;
+	bool t2Won;
 	int32_t _fightsSincePlanted;
 
 

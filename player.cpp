@@ -9,9 +9,10 @@ Player::Player(std::string name, Team* team)
 	_skill = 0;
 	_priority = 0;
 	_score = 0;
-	_kills = 0;
-	_assist = 0;
-	_death = 0;
+	_totalKills = 0;
+	_totalDeaths = 0;
+	_roundKills = 0;
+	_roundDeaths = 0;
 	_amountOfPlants = 0;
 	_amountOfDefuses = 0;
 	_name = name;
@@ -30,12 +31,12 @@ bool Player::IsAttacking()
 	return _team->IsAttacking();
 }
 
-int Player::GetInitialHealth()
+int32_t Player::GetInitialHealth()
 {
 	return _initialHealth;
 }
 
-int Player::GetCurrentHealth()
+int32_t Player::GetCurrentHealth()
 {
 	return _currentHealth;
 }
@@ -49,45 +50,45 @@ void Player::DamageHealth(int32_t damage)
 	}
 }
 
-int Player::GetSkillLevel()
+int32_t Player::GetSkillLevel()
 {
 	_skill = rand() % 5 + 1;
 	return _skill;
 }
 
-int Player::GetPriorityLevel()
+int32_t Player::GetPriorityLevel()
 {
 	_priority = rand() % 10 + 1;
 	return _priority;
 }
 
-int Player::GetScore()
+int32_t Player::GetScore()
 {
 	return _score;
 }
 
-int Player::GetCurrentAmmo()
+int32_t Player::GetCurrentAmmo()
 {
 	return _weapon.GetAmmo();
 }
 
-WeaponsTypes Player::GetPlayerWeapon()
+std::string Player::GetPlayerWeapon()
 {
-	return _weapon.GetWeapon();
+	return _weapon.GetWeaponName();
 }
 
-int Player::GetPlayerWeaponAccuracy()
+int32_t Player::GetPlayerWeaponAccuracy()
 {
 	return _weapon.GetWeaponAccuracy();
 }
 
-int Player::GetPlayerWeaponDamage()
+int32_t Player::GetPlayerWeaponDamage()
 {
 	int32_t weaponDamageAdjust = rand() % RANDOM_DAMAGE_ADJUST;
 	return _weapon.GetWeaponDamage() - weaponDamageAdjust;
 }
 
-int Player::GetBulletShots()
+int32_t Player::GetBulletShots()
 {
 	return _magazineCapacity - GetCurrentAmmo();
 }
@@ -97,7 +98,7 @@ void Player::ShotBullet()
 	_weapon.ShotingBullets();
 }
 
-int Player::GetBulletHits()
+int32_t Player::GetBulletHits()
 {
 
 	return 0;
@@ -106,7 +107,14 @@ int Player::GetBulletHits()
 void Player::TriggeredKill()
 {
 	_score += 100;
-	_kills++;
+	_totalKills++;
+	_roundKills++;
+}
+
+void Player::ResetRoundKillsAndDeaths()
+{
+	_roundKills = 0;
+	_roundDeaths = 0;
 }
 
 bool Player::IsAlive()
@@ -125,13 +133,8 @@ bool Player::IsDead()
 
 void Player::IncrementDeaths()
 {
-	_death++;
-}
-
-void Player::Assisted()
-{
-	_score += 50;
-	_assist++;
+	_roundDeaths++;
+	_totalDeaths++;
 }
 
 void Player::ResetRoundDamage()
@@ -145,19 +148,15 @@ void Player::IncrementDamageDone(int32_t damage)
 	_totalRoundDamage += damage;
 }
 
-int Player::GetKills()
+int32_t Player::GetTotalKills()
 {
-	return _kills;
+	return _totalKills;
 }
 
-int Player::GetAssist()
-{
-	return _assist;
-}
 
-int Player::GetDeath()
+int32_t Player::GetTotalDeaths()
 {
-	return _death;
+	return _totalDeaths;
 }
 
 bool Player::HasDefuser()
@@ -187,22 +186,32 @@ void Player::IncrementDefuses()
 	_amountOfDefuses++;
 }
 
-int Player::GetPlants()
+int32_t Player::GetPlants()
 {
 	return _amountOfPlants;
 }
 
-int Player::GetDefuses()
+int32_t Player::GetDefuses()
 {
 	return _amountOfDefuses;
 }
 
-int Player::GetTotalGameDamage()
+int32_t Player::GetTotalGameDamage()
 {
 	return _totalGameDamage;
 }
 
-int Player::GetRoundDamage()
+int32_t Player::GetRoundDamage()
 {
 	return _totalRoundDamage;
+}
+
+int32_t Player::GetRoundKills()
+{
+	return _roundKills;
+}
+
+int32_t Player::GetRoundDeaths()
+{
+	return _roundDeaths;
 }

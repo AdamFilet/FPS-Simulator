@@ -34,6 +34,8 @@ public:
 
 	void ResetHealth();
 
+	void ResetRoundKillsAndDeaths();
+
 	std::vector<std::string> GetTeamsWeapons();
 
 	std::vector<std::string> GetPlayersNames();
@@ -42,7 +44,17 @@ public:
 
 	std::vector<int32_t> GetPlayersKills();
 
+	std::vector<int32_t> GetPlayerRoundKill();
+
+	std::vector<int32_t> GetPlayerRounDeaths();
+
 	std::vector<int32_t> GetPlayersRoundDamage();
 
 	std::vector<int32_t> GetPlayersTotalDamage();
+	
+	std::vector<int32_t> GetPlayersScore();
+
+	std::vector<int32_t> GetPlayersPlants();
+
+	std::vector<int32_t> GetPlayDefuses();
 };

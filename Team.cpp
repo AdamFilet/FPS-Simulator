@@ -80,34 +80,12 @@ void Team::ResetHealth()
 	}
 }
 
-std::vector<std::string> Team::GetTeamsWeapons()
+void Team::ResetRoundKillsAndDeaths()
 {
-	std::vector<std::string> playersWeapons;
-	for (int i = 0; i < _players.size(); i++)
+	for (Player& player : _players)
 	{
-		WeaponsTypes weapon = _players.at(i).GetPlayerWeapon();
-		if (weapon == 0)
-		{
-			playersWeapons.push_back("R4C");
-		}
-		else if (weapon == 1)
-		{
-			playersWeapons.push_back("L85A2");
-		}
-		else if (weapon == 2)
-		{
-			playersWeapons.push_back("MPX");
-		}
-		else if (weapon == 3)
-		{
-			playersWeapons.push_back("K1A");
-		}
-		else if (weapon == 4)
-		{
-			playersWeapons.push_back("GP41");
-		}
+		player.ResetRoundKillsAndDeaths();
 	}
-	return playersWeapons; 
 }
 
 std::vector<std::string> Team::GetPlayersNames()
@@ -125,7 +103,7 @@ std::vector<int32_t> Team::GetPlayersDeaths()
 	std::vector<int32_t> playersDeaths;
 	for (Player& playerDeath : _players)
 	{
-		playersDeaths.push_back(playerDeath.GetDeath());
+		playersDeaths.push_back(playerDeath.GetTotalDeaths());
 	}
 	return playersDeaths;
 }
@@ -135,7 +113,7 @@ std::vector<int32_t> Team::GetPlayersKills()
 	std::vector<int32_t> playerKills;
 	for (Player& playerKill : _players)
 	{
-		playerKills.push_back(playerKill.GetKills());
+		playerKills.push_back(playerKill.GetTotalKills());
 	}
 	return playerKills;
 }
@@ -158,4 +136,54 @@ std::vector<int32_t> Team::GetPlayersTotalDamage()
 		playersDamage.push_back(playerDamage.GetTotalGameDamage());
 	}
 	return playersDamage;
+}
+
+std::vector<int32_t> Team::GetPlayersScore()
+{
+	std::vector<int32_t> playerScores;
+	for (Player& playerScore : _players)
+	{
+		playerScores.push_back(playerScore.GetScore());
+	}
+	return playerScores;
+}
+
+std::vector<int32_t> Team::GetPlayersPlants()
+{
+	std::vector<int32_t> playerPlants;
+	for (Player& playerPlant : _players)
+	{
+		playerPlants.push_back(playerPlant.GetPlants());
+	}
+	return playerPlants;
+}
+
+std::vector<int32_t> Team::GetPlayDefuses()
+{
+	std::vector<int32_t> playerDefuses;
+	for (Player& playerDefuse : _players)
+	{
+		playerDefuses.push_back(playerDefuse.GetDefuses());
+	}
+	return playerDefuses;
+}
+
+std::vector<int32_t> Team::GetPlayerRoundKill()
+{
+	std::vector<int32_t> playerKills;
+	for (Player& playerKill : _players)
+	{
+		playerKills.push_back(playerKill.GetRoundKills());
+	}
+	return playerKills;
+}
+
+std::vector<int32_t> Team::GetPlayerRounDeaths()
+{
+	std::vector<int32_t> playerDeaths;
+	for (Player& playerDeath : _players)
+	{
+		playerDeaths.push_back(playerDeath.GetRoundDeaths());
+	}
+	return playerDeaths;
 }

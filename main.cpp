@@ -20,8 +20,8 @@ int main()
 		roundCount++;
 	}
 
-	
-	gameManager.PrintScore();
 	gameManager.PrintStats();
+	std::cout << std::endl;
+	gameManager.PrintScore();
 
 }

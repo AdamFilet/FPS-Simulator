@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <string>
 
 enum WeaponsTypes
 {
@@ -7,7 +8,8 @@ enum WeaponsTypes
 	L85A2,
 	MPX,
 	K1A,
-	GP41
+	GP41,
+	END
 };
 
 class Weapon
@@ -21,7 +23,7 @@ private:
 public:
 	Weapon();
 	
-	WeaponsTypes GetWeapon();
+	std::string GetWeaponName();
 
 	void ShotingBullets();
 

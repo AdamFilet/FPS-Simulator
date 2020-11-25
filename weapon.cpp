@@ -47,9 +47,10 @@ Weapon::Weapon()
 }
 
 
-WeaponsTypes Weapon::GetWeapon()
+std::string Weapon::GetWeaponName()
 {
-	return _weaponType;
+	const char* weaponNames[END + 1] = { "R4C", "L85A2", "MPX", "K1A", "GP41", "END" };
+	return weaponNames[_weaponType];
 }
 
 int32_t Weapon::GetWeaponAccuracy()
