@@ -13,7 +13,7 @@ GameManager::GameManager() :_team1(PLAYERS_PER_TEAM, true), _team2(PLAYERS_PER_T
 	_fightsSincePlanted = 0;
 }
 
-bool GameManager::IsRoundOver() // Check why the round isnt over after all the defenders are dead 
+bool GameManager::IsRoundOver() 
 {
 	if (_team1.IsTeamDead())
 	{
@@ -71,7 +71,7 @@ void GameManager::Matchmake()
 	while (eligibleFighters1.size() != 0 && eligibleFighters2.size() != 0)
 	{
 		int32_t i = rand() % eligibleFighters1.size();
-		int32_t i2 = rand() % eligibleFighters2.size(); // Problems occurs here
+		int32_t i2 = rand() % eligibleFighters2.size(); 
 		Player* p1 = eligibleFighters1.at(i);
 		Player* p2 = eligibleFighters2.at(i2);
 
@@ -83,7 +83,6 @@ void GameManager::Matchmake()
 
 	}
 
-	//TODO: Team might need to be referenced  
 	handleExtraPlayers(_team1, eligibleFighters1);
 	handleExtraPlayers(_team2, eligibleFighters2);
 	_roundCount++;

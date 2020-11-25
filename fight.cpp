@@ -97,7 +97,7 @@ void Fight::StartFight()
 	}
 }
 
-void Fight::handleFight(Player& attacker, Player& defender) // Only defender is dying, unknown reason
+void Fight::handleFight(Player& attacker, Player& defender) 
 {
 	while (attacker.IsAlive() && defender.IsAlive())
 	{

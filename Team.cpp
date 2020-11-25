@@ -1,5 +1,5 @@
 #include "Team.h"
-// Going to prolly need references for this
+
 Team::Team(int playerCount, bool isAttacking)
 {
 	_isAttacking = isAttacking;
