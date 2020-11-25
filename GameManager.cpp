@@ -169,6 +169,8 @@ void GameManager::StartFights()
 {
 	_team1.ResetAmmo();
 	_team2.ResetAmmo();
+	std::cout << "Round Feed" << std::endl;
+	std::cout << "--------------------------------------------" << std::endl;
 	for (Fight& fight : _fights)
 	{
 		fight.StartFight();
@@ -212,12 +214,12 @@ void GameManager::addTeam2Score()
 
 void GameManager::PrintStats()
 {
+	std::cout << std::endl;
 	std::cout << std::setw(5) << "Name" << std::setw(15) << "Score" << std::setw(15) << "Weapon";
 	std::cout << std::setw(15) << "Kills" << std::setw(15) << "Deaths" << std::setw(15) << "Damage";
 	std::cout << std::setw(15) << "Plants" << std::setw(15) << "Defuses" << std::endl;
 	std::cout << "--------------------------------------------------------------------------------------------------------------" << std::endl;
 	std::cout << "TEAM 1" << std::endl;
-	// returning vectors just call player functions
 	for (Player& player : _team1.GetAllPlayers())
 	{
 		std::cout << std::setw(5) << player.GetName() << ": ";
@@ -242,12 +244,13 @@ void GameManager::PrintStats()
 		std::cout << std::setw(15) << player.GetPlants();
 		std::cout << std::setw(15) << player.GetDefuses() << std::endl;
 	}
+	std::cout << std::endl;
 }
 
 //Killfeed by saying who killed who in plant
 void GameManager::PrintRoundStats() 
 {
-	printKillFeed();
+	std::cout << std::endl;
 	std::cout << std::setw(5) << "Name" << std::setw(15) << "Kills" << std::setw(15);
 	std::cout << "Deaths" << std::setw(15) << "Damage" << std::endl;
 	std::cout << "---------------------------------------------------" << std::endl;
@@ -277,9 +280,5 @@ void GameManager::PrintRoundStats()
 	{
 		std::cout << "TEAM 2 WON!" << std::endl;
 	}
-}
-
-void GameManager::printKillFeed()
-{
-
+	std::cout << std::endl;
 }

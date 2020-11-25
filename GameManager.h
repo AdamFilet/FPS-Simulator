@@ -61,6 +61,5 @@ private:
 	void handleExtraPlayers(Team& team, std::vector<Player*> eligibleFighters);
 	void addTeam1Score();
 	void addTeam2Score();
-	void printKillFeed();
 
 };

@@ -4,7 +4,7 @@ Team::Team(int playerCount, bool isAttacking)
 {
 	_isAttacking = isAttacking;
 
-	for (int i = 0; i < playerCount; i++)
+	for (int i = 1; i < playerCount+1; i++)
 	{
 		std::string name = "Player " + std::to_string(i);
 		_players.push_back(Player(name, this));

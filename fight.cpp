@@ -134,6 +134,9 @@ void Fight::handleFight(Player& attacker, Player& defender) // Only defender is 
 				attacker.ShotBullet();
 				if (defender.IsDead())
 				{
+					std::cout << "[T" << attacker.IsAttacking() << "] " << attacker.GetName();
+					std::cout << "  Killed ------> " << "[T" << defender.IsAttacking();
+					std::cout << "] " << defender.GetName() << std::endl;
 					defender.IncrementDeaths();
 					attacker.TriggeredKill();
 					break;
@@ -165,8 +168,11 @@ void Fight::handleFight(Player& attacker, Player& defender) // Only defender is 
 				defender.ShotBullet();
 				if (attacker.IsDead())
 				{
+					std::cout << "[T" << defender.IsAttacking() << "] " << defender.GetName();
+					std::cout << "  Killed ------> " << "[T" << attacker.IsAttacking();
+					std::cout << "] " << attacker.GetName() << std::endl;
 					attacker.IncrementDeaths();
-					defender.TriggeredKill();
+					defender.TriggeredKill(); 
 					break;
 				}
 			}
@@ -183,6 +189,7 @@ void Fight::plantBomb(Player& planter)
 	int32_t chanceToPlant = rand() % 100;
 	if (chanceToPlant <= CHANCE_TO_PLANT_BOMB)
 	{
+		std::cout << "[T" << planter.IsAttacking() << "] " << planter.GetName() << " Planted bomb!" << std::endl;
 		planter.IncrementPlants();
 		_gameManager->BombPlanted();
 	}
@@ -193,6 +200,7 @@ void Fight::defuseBomb(Player& defuser)
 	int32_t chanceToDefuse = rand() % 100;
 	if (chanceToDefuse <= CHANCE_TO_DEFUSE_BOMB)
 	{
+		std::cout << defuser.GetName() << " Defused bomb!" << std::endl;
 		defuser.IncrementDefuses();
 		_gameManager->BombDefused();
 	}
@@ -214,6 +222,9 @@ void Fight::oneSidedFight(Player& fighter, Player& defuserOrPlanter)
 		fighter.ShotBullet();
 		if(defuserOrPlanter.IsDead())
 		{
+			std::cout << "[T" << fighter.IsAttacking() << "] " << fighter.GetName();
+			std::cout << "  Killed ------> " << "[T" << defuserOrPlanter.IsAttacking();
+			std::cout << "] " << defuserOrPlanter.GetName() << std::endl;
 			fighter.TriggeredKill();
 			defuserOrPlanter.IncrementDeaths();
 			break;
